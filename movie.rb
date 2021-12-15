@@ -6,7 +6,7 @@ class Movie
   attr_reader :title
   attr_accessor :price_code
 
-  def initialize
+  def initialize(title, price_code)
     @title, @price_code = title, price_code
   end
 end
@@ -15,7 +15,7 @@ end
 class Rental
   attr_reader :movie, :days_rented
 
-  def initialize
+  def initialize(movie, days_rented)
     @movie, @days_rented = movie, days_rented
   end
 end
@@ -23,7 +23,7 @@ end
 class Customer
   attr_reader :name
 
-  def initialize
+  def initialize(name)
     @name = name
     @rentals = []
   end
@@ -51,7 +51,7 @@ class Customer
       # add frequent renter points
       frequent_renter_points += 1
       # add bonus for a two day new release rental
-      if element.movie.price_code == Movie.NEW_RELEASE && element.days_rented > 1
+      if element.movie.price_code == Movie::NEW_RELEASE && element.days_rented > 1
           frequent_renter_points += 1
       end
       # show figures for this rental
