@@ -11,103 +11,119 @@ class MovieTest < Minitest::Test
     @short_term = 1
   end
 
-  def test_customer_name
-    assert_equal "ashik", @customer.name
-  end
-
-  def test_rental_movie_and_days_rented
-    rental = Rental.new(@regular_movie, @long_term)
-
-    assert_equal @regular_movie, rental.movie
-    assert_equal @long_term, rental.days_rented
-  end
-
-  def test_regular_movie_title_and_regular_price_code
-    assert_equal "waking life", @regular_movie.title
-    assert_equal 0, @regular_movie.price_code
-  end
-
   def test_statement_regular_movie_short_term
     short_rental = Rental.new(@regular_movie, @short_term)
     @customer.add_rental(short_rental)
-
-    expected_statement = <<~HEREDOC.chomp
+    expected_statement = <<~HEREDOC
       Rental Record for ashik
-      \twaking life\t2
+      waking life 2
       Amount owed is 2
       You earned 1 frequent renter points
     HEREDOC
 
-    assert_equal expected_statement,@customer.statement
+    statement = @customer.statement
+
+    assert_same_string expected_statement, statement
   end
 
   def test_statement_regular_movie_long_term
     long_rental = Rental.new(@regular_movie, @long_term)
     @customer.add_rental(long_rental)
-
-    expected_statement = <<~HEREDOC.chomp
+    expected_statement = <<~HEREDOC
       Rental Record for ashik
-      \twaking life\t9.5
+      waking life 9.5
       Amount owed is 9.5
       You earned 1 frequent renter points
     HEREDOC
 
-    assert_equal expected_statement,@customer.statement
+    statement = @customer.statement
+
+    assert_same_string expected_statement, statement
   end
 
   def test_statement_childrens_movie_short_term
     short_rental = Rental.new(@childrens_movie, @short_term)
     @customer.add_rental(short_rental)
-
-    expected_statement = <<~HEREDOC.chomp
+    expected_statement = <<~HEREDOC
       Rental Record for ashik
-      \tfrozen\t1.5
+      frozen 1.5
       Amount owed is 1.5
       You earned 1 frequent renter points
     HEREDOC
 
-    assert_equal expected_statement,@customer.statement
+    statement = @customer.statement
+
+    assert_same_string expected_statement, statement
   end
 
   def test_statement_childrens_movie_long_term
     long_rental = Rental.new(@childrens_movie, @long_term)
     @customer.add_rental(long_rental)
-
-    expected_statement = <<~HEREDOC.chomp
+    expected_statement = <<~HEREDOC
       Rental Record for ashik
-      \tfrozen\t7.5
+      frozen 7.5
       Amount owed is 7.5
       You earned 1 frequent renter points
     HEREDOC
 
-    assert_equal expected_statement,@customer.statement
+    statement = @customer.statement
+
+    assert_same_string expected_statement, statement
   end
 
   def test_statement_new_release_movie_short_term
     short_rental = Rental.new(@new_release_movie, @short_term)
     @customer.add_rental(short_rental)
-
-    expected_statement = <<~HEREDOC.chomp
+    expected_statement = <<~HEREDOC
       Rental Record for ashik
-      \tdune\t3
+      dune 3
       Amount owed is 3
       You earned 1 frequent renter points
     HEREDOC
 
-    assert_equal expected_statement,@customer.statement
+    statement = @customer.statement
+
+    assert_same_string expected_statement, statement
   end
 
   def test_statement_new_release_movie_long_term
     long_rental = Rental.new(@new_release_movie, @long_term)
     @customer.add_rental(long_rental)
-
-    expected_statement = <<~HEREDOC.chomp
+    expected_statement = <<~HEREDOC
       Rental Record for ashik
-      \tdune\t21
+      dune 21
       Amount owed is 21
       You earned 2 frequent renter points
     HEREDOC
 
-    assert_equal expected_statement,@customer.statement
+    statement = @customer.statement
+
+    assert_same_string expected_statement, statement
+  end
+
+  def test_statement_adds_multiple_movies
+    long_rental = Rental.new(@regular_movie, @long_term)
+    short_rental = Rental.new(@new_release_movie, @short_term)
+    @customer.add_rental(long_rental)
+    @customer.add_rental(short_rental)
+    expected_statement = <<~HEREDOC
+      Rental Record for ashik
+      waking life 9.5
+      dune 3
+      Amount owed is 12.5
+      You earned 2 frequent renter points
+    HEREDOC
+
+    statement = @customer.statement
+
+    assert_same_string expected_statement, statement
+  end
+
+  def assert_same_string(expected, actual)
+    assert_equal normalize_whitespace(expected), normalize_whitespace(actual)
+  end
+
+  def normalize_whitespace(string)
+    string.gsub(/\s+/, " ").strip
   end
 end
