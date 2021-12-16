@@ -51,6 +51,9 @@ class Customer
     @rentals << arg
   end
 
+  def html_statement
+  end
+
   def statement
     result = "Rental Record for #{@name}\n"
     @rentals.each do |rental|
