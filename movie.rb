@@ -69,10 +69,6 @@ class Customer
   private
 
   def total_charge
-    result = 0
-    @rentals.map do |rental|
-      result += rental.charge
-    end
-    result
+    @rentals.inject(0) { |sum, rental| sum + rental.charge }
   end
 end
