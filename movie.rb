@@ -35,7 +35,7 @@ class Rental
   end
 
   def frequent_renter_points
-    movie.price_code == Movie::NEW_RELEASE && days_rented > 1 ? 2 : 1
+    (movie.price_code == Movie::NEW_RELEASE && days_rented > 1) ? 2 : 1
   end
 end
 
@@ -52,11 +52,8 @@ class Customer
   end
 
   def statement
-    total_amount, frequent_renter_points = 0, 0
     result = "Rental Record for #{@name}\n"
     @rentals.each do |rental|
-      # add frequent renter points
-      frequent_renter_points += rental.frequent_renter_points
       # show figures for this rental
       result += "\t" + rental.movie.title + "\t" + rental.charge.to_s + "\n"
     end
@@ -70,5 +67,9 @@ class Customer
 
   def total_charge
     @rentals.inject(0) { |sum, rental| sum + rental.charge }
+  end
+
+  def frequent_renter_points
+    @rentals.inject(0) { |sum, rental| sum + rental.frequent_renter_points }
   end
 end
