@@ -59,11 +59,20 @@ class Customer
       frequent_renter_points += rental.frequent_renter_points
       # show figures for this rental
       result += "\t" + rental.movie.title + "\t" + rental.charge.to_s + "\n"
-      total_amount += rental.charge
     end
     # add footer lines
-    result += "Amount owed is #{total_amount}\n"
+    result += "Amount owed is #{total_charge}\n"
     result += "You earned #{frequent_renter_points} frequent renter points"
+    result
+  end
+
+  private
+
+  def total_charge
+    result = 0
+    @rentals.map do |rental|
+      result += rental.charge
+    end
     result
   end
 end
