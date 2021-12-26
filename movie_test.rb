@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative 'movie'
+require_relative 'app'
 
 class MovieTest < Minitest::Test
   def setup
