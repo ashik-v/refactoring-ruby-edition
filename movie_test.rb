@@ -4,9 +4,9 @@ require_relative 'movie'
 class MovieTest < Minitest::Test
   def setup
     @customer = Customer.new("ashik")
-    @regular_movie = Movie.new("waking life", 0)
-    @new_release_movie = Movie.new("dune", 1)
-    @childrens_movie = Movie.new("frozen", 2)
+    @regular_movie = Movie.new("waking life", RegularPrice.new)
+    @new_release_movie = Movie.new("dune", NewReleasePrice.new)
+    @childrens_movie = Movie.new("frozen", ChildrensPrice.new)
     @long_term = 7
     @short_term = 1
   end
