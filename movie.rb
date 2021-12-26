@@ -6,6 +6,10 @@ class Movie
   attr_reader :title
   attr_accessor :price_code
 
+  def price_code=(value)
+    @price_code = value
+  end
+
   def initialize(title, price_code)
     @title, @price_code = title, price_code
   end
@@ -83,4 +87,13 @@ class Customer
   def frequent_renter_points
     @rentals.inject(0) { |sum, rental| sum + rental.frequent_renter_points }
   end
+end
+
+class RegularPrice
+end
+
+class NewReleasePrice
+end
+
+class ChildrensPrice
 end
