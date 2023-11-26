@@ -45,7 +45,7 @@ class Rental
   end
 
   def statement_line_item
-    "\t" + movie.title + "\t" + rental_amount.to_s + "\n"
+    "\t#{movie.title}\t#{rental_amount}\n"
   end
 end
 
