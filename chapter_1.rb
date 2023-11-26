@@ -3,8 +3,7 @@ class Movie
   NEW_RELEASE = 1
   CHILDRENS = 2
 
-  attr_reader :title
-  attr_reader :price_code
+  attr_reader :title, :price_code
 
   def initialize(title, price_code)
     @title, @price_code = title, price_code
