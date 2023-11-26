@@ -28,6 +28,21 @@ class Rental
 
     frequent_renter_points
   end
+
+  def rental_amount
+    this_amount = 0
+    case movie.price_code
+    when Movie::REGULAR
+      this_amount += 2
+      this_amount += (days_rented - 2) * 1.5 if days_rented > 2
+    when Movie::NEW_RELEASE
+      this_amount += days_rented * 3
+    when Movie::CHILDRENS
+      this_amount += 1.5
+      this_amount += (days_rented - 3) * 1.5 if days_rented > 3
+    end
+    this_amount
+  end
 end
 
 
@@ -50,27 +65,12 @@ class Customer
       # add frequent renter points
       frequent_renter_points += rental.frequent_renter_points_for
       # show figures for this rental
-      result += "\t" + rental.movie.title + "\t" + rental_amount(rental).to_s + "\n"
-      total_amount += rental_amount(rental)
+      result += "\t" + rental.movie.title + "\t" + rental.rental_amount.to_s + "\n"
+      total_amount += rental.rental_amount
     end
     #add footer lines
     result += "Amount owed is #{total_amount}\n"
     result += "You earned #{frequent_renter_points} frequent renter points"
     result
-  end
-
-  def rental_amount(rental)
-    this_amount = 0
-    case rental.movie.price_code
-      when Movie::REGULAR
-        this_amount += 2
-        this_amount += (rental.days_rented - 2) * 1.5 if rental.days_rented > 2
-      when Movie::NEW_RELEASE
-        this_amount += rental.days_rented * 3
-      when Movie::CHILDRENS
-        this_amount += 1.5
-        this_amount += (rental.days_rented - 3) * 1.5 if rental.days_rented > 3
-      end
-    this_amount
   end
 end
