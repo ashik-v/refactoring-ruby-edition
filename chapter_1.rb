@@ -63,7 +63,8 @@ class Customer
 
   def statement
     total_amount, frequent_renter_points = 0, 0
-    result = "Rental Record for #{@name}\n"
+
+    result = statement_greeting
     @rentals.each do |rental|
       # add frequent renter points
       frequent_renter_points += rental.frequent_renter_points_for
@@ -72,8 +73,17 @@ class Customer
       total_amount += rental.rental_amount
     end
     # add footer lines
-    result += "Amount owed is #{total_amount}\n"
-    result += "You earned #{frequent_renter_points} frequent renter points"
+    result += statement_sign_off(total_amount, frequent_renter_points)
+
     result
+  end
+
+  def statement_greeting
+    "Rental Record for #{@name}\n"
+  end
+
+  def statement_sign_off(total_amount, frequent_renter_points)
+    "Amount owed is #{total_amount}\n" +
+      "You earned #{frequent_renter_points} frequent renter points"
   end
 end
