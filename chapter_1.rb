@@ -62,11 +62,15 @@ class Customer
   end
 
   def statement
-    "#{statement_greeting}#{rentals.map(&:statement_line_item).join("\n")}\n#{statement_sign_off}"
+    [
+      statement_greeting,
+      rentals.map(&:statement_line_item).join("\n"),
+      statement_sign_off,
+    ].join("\n")
   end
 
   def statement_greeting
-    "Rental Record for #{@name}\n"
+    "Rental Record for #{@name}"
   end
 
   def statement_sign_off
