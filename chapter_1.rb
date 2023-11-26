@@ -62,13 +62,10 @@ class Customer
   end
 
   def statement
-    total_amount = rentals.sum(&:rental_amount)
-    frequent_renter_points = rentals.sum(&:frequent_renter_points_for)
-
     result = statement_greeting + rentals.map(&:statement_line_item).join("\n") + "\n"
 
     # add footer lines
-    result += statement_sign_off(total_amount, frequent_renter_points)
+    result += statement_sign_off
 
     result
   end
@@ -77,8 +74,8 @@ class Customer
     "Rental Record for #{@name}\n"
   end
 
-  def statement_sign_off(total_amount, frequent_renter_points)
-    "Amount owed is #{total_amount}\n" +
-      "You earned #{frequent_renter_points} frequent renter points"
+  def statement_sign_off
+    "Amount owed is #{rentals.sum(&:rental_amount)}\n" +
+      "You earned #{rentals.sum(&:frequent_renter_points_for)} frequent renter points"
   end
 end
