@@ -62,10 +62,7 @@ class Customer
   end
 
   def statement
-    statement_greeting +
-      rentals.map(&:statement_line_item).join("\n") +
-      "\n" +
-      statement_sign_off
+    "#{statement_greeting}#{rentals.map(&:statement_line_item).join("\n")}\n#{statement_sign_off}"
   end
 
   def statement_greeting
