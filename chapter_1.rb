@@ -74,7 +74,15 @@ class Customer
   end
 
   def statement_sign_off
-    "Amount owed is #{rentals.sum(&:rental_amount)}\n" +
-      "You earned #{rentals.sum(&:frequent_renter_points_for)} frequent renter points"
+    "Amount owed is #{total_amount}\n" +
+      "You earned #{total_frequent_renter_points} frequent renter points"
+  end
+
+  def total_amount
+    rentals.sum(&:rental_amount)
+  end
+
+  def total_frequent_renter_points
+    rentals.sum(&:frequent_renter_points_for)
   end
 end
