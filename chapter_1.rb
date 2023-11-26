@@ -62,9 +62,11 @@ class Customer
   end
 
   def statement
-    total_amount, frequent_renter_points = rentals.sum(&:rental_amount), rentals.sum(&:frequent_renter_points_for)
+    total_amount = rentals.sum(&:rental_amount)
+    frequent_renter_points = rentals.sum(&:frequent_renter_points_for)
 
     result = statement_greeting
+
     rentals.each do |rental|
       # show figures for this rental
       result += rental.statement_line_item
