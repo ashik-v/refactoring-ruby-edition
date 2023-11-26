@@ -71,7 +71,7 @@ class Customer
       result += rental.statement_line_item
       total_amount += rental.rental_amount
     end
-    #add footer lines
+    # add footer lines
     result += "Amount owed is #{total_amount}\n"
     result += "You earned #{frequent_renter_points} frequent renter points"
     result
