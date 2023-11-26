@@ -18,7 +18,7 @@ class Rental
     @movie, @days_rented = movie, days_rented
   end
 
-  def frequent_renter_points_for
+  def frequent_renter_points
     frequent_renter_points = 0
     frequent_renter_points += 1
     # add bonus for a two day new release rental
@@ -91,6 +91,6 @@ class Customer
   end
 
   def total_frequent_renter_points
-    rentals.sum(&:frequent_renter_points_for)
+    rentals.sum(&:frequent_renter_points)
   end
 end
