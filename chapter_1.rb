@@ -43,6 +43,10 @@ class Rental
     end
     this_amount
   end
+
+  def statement_line_item
+    "\t" + movie.title + "\t" + rental_amount.to_s + "\n"
+  end
 end
 
 class Customer
@@ -64,7 +68,7 @@ class Customer
       # add frequent renter points
       frequent_renter_points += rental.frequent_renter_points_for
       # show figures for this rental
-      result += "\t" + rental.movie.title + "\t" + rental.rental_amount.to_s + "\n"
+      result += rental.statement_line_item
       total_amount += rental.rental_amount
     end
     #add footer lines
