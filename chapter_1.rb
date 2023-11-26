@@ -35,12 +35,12 @@ class Customer
   def statement
     total_amount, frequent_renter_points = 0, 0
     result = "Rental Record for #{@name}\n"
-    @rentals.each do |element|
+    @rentals.each do |rental|
       # add frequent renter points
-      frequent_renter_points += frequent_renter_points_for(element)
+      frequent_renter_points += frequent_renter_points_for(rental)
       # show figures for this rental
-      result += "\t" + element.movie.title + "\t" + rental_amount(element).to_s + "\n"
-      total_amount += rental_amount(element)
+      result += "\t" + rental.movie.title + "\t" + rental_amount(rental).to_s + "\n"
+      total_amount += rental_amount(rental)
     end
     #add footer lines
     result += "Amount owed is #{total_amount}\n"
