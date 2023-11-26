@@ -62,12 +62,10 @@ class Customer
   end
 
   def statement
-    result = statement_greeting + rentals.map(&:statement_line_item).join("\n") + "\n"
-
-    # add footer lines
-    result += statement_sign_off
-
-    result
+    statement_greeting +
+      rentals.map(&:statement_line_item).join("\n") +
+      "\n" +
+      statement_sign_off
   end
 
   def statement_greeting
