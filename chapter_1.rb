@@ -50,22 +50,22 @@ class Rental
 end
 
 class Customer
-  attr_reader :name
+  attr_reader :name, :rentals
 
   def initialize(name)
     @name = name
     @rentals = []
   end
 
-  def add_rental(arg)
-    @rentals << arg
+  def add_rental(rental)
+    @rentals << rental
   end
 
   def statement
     total_amount, frequent_renter_points = 0, 0
 
     result = statement_greeting
-    @rentals.each do |rental|
+    rentals.each do |rental|
       # add frequent renter points
       frequent_renter_points += rental.frequent_renter_points_for
       # show figures for this rental
