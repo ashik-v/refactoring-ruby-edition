@@ -17,6 +17,17 @@ class Rental
   def initialize(movie, days_rented)
     @movie, @days_rented = movie, days_rented
   end
+
+  def frequent_renter_points_for
+    frequent_renter_points = 0
+    frequent_renter_points += 1
+    # add bonus for a two day new release rental
+    if movie.price_code == Movie::NEW_RELEASE && days_rented > 1
+      return frequent_renter_points + 1
+    end
+
+    frequent_renter_points
+  end
 end
 
 
@@ -37,7 +48,7 @@ class Customer
     result = "Rental Record for #{@name}\n"
     @rentals.each do |rental|
       # add frequent renter points
-      frequent_renter_points += frequent_renter_points_for(rental)
+      frequent_renter_points += rental.frequent_renter_points_for
       # show figures for this rental
       result += "\t" + rental.movie.title + "\t" + rental_amount(rental).to_s + "\n"
       total_amount += rental_amount(rental)
@@ -46,17 +57,6 @@ class Customer
     result += "Amount owed is #{total_amount}\n"
     result += "You earned #{frequent_renter_points} frequent renter points"
     result
-  end
-
-  def frequent_renter_points_for(rental)
-    frequent_renter_points = 0
-    frequent_renter_points += 1
-    # add bonus for a two day new release rental
-    if rental.movie.price_code == Movie::NEW_RELEASE && rental.days_rented > 1
-      return frequent_renter_points + 1
-    end
-
-    frequent_renter_points
   end
 
   def rental_amount(rental)
