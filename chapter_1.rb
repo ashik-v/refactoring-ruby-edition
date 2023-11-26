@@ -45,7 +45,7 @@ class Rental
   end
 
   def statement_line_item
-    "\t#{movie.title}\t#{rental_amount}\n"
+    "\t#{movie.title}\t#{rental_amount}"
   end
 end
 
@@ -65,12 +65,8 @@ class Customer
     total_amount = rentals.sum(&:rental_amount)
     frequent_renter_points = rentals.sum(&:frequent_renter_points_for)
 
-    result = statement_greeting
+    result = statement_greeting + rentals.map(&:statement_line_item).join("\n") + "\n"
 
-    rentals.each do |rental|
-      # show figures for this rental
-      result += rental.statement_line_item
-    end
     # add footer lines
     result += statement_sign_off(total_amount, frequent_renter_points)
 
