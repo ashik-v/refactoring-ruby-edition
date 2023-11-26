@@ -64,13 +64,19 @@ class Customer
   def statement
     [
       statement_greeting,
-      rentals.map(&:statement_line_item).join("\n"),
+      statement_body,
       statement_sign_off,
     ].join("\n")
   end
 
   def statement_greeting
     "Rental Record for #{name}"
+  end
+
+  def statement_body
+    rentals
+      .map(&:statement_line_item)
+      .join("\n")
   end
 
   def statement_sign_off
