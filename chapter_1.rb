@@ -39,17 +39,19 @@ class Rental
   end
 
   def rental_amount
-    this_amount = 0
+    result = 0
+
     if movie.regular?
-      this_amount += 2
-      this_amount += (days_rented - 2) * 1.5 if days_rented > 2
+      result += 2
+      result += (days_rented - 2) * 1.5 if days_rented > 2
     elsif movie.new_release?
-      this_amount += days_rented * 3
+      result += days_rented * 3
     elsif movie.childrens?
-      this_amount += 1.5
-      this_amount += (days_rented - 3) * 1.5 if days_rented > 3
+      result += 1.5
+      result += (days_rented - 3) * 1.5 if days_rented > 3
     end
-    this_amount
+
+    result
   end
 
   def statement_line_item
