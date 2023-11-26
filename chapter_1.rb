@@ -74,8 +74,10 @@ class Customer
   end
 
   def statement_sign_off
-    "Amount owed is #{total_amount}\n" +
-      "You earned #{total_frequent_renter_points} frequent renter points"
+    [
+      "Amount owed is #{total_amount}",
+      "You earned #{total_frequent_renter_points} frequent renter points",
+    ].join("\n")
   end
 
   def total_amount
