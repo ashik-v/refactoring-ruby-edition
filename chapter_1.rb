@@ -70,7 +70,7 @@ class Customer
   end
 
   def statement_greeting
-    "Rental Record for #{@name}"
+    "Rental Record for #{name}"
   end
 
   def statement_sign_off
