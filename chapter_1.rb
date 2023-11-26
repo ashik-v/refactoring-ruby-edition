@@ -9,6 +9,18 @@ class Movie
   def initialize(title, price_code)
     @title, @price_code = title, price_code
   end
+
+  def regular?
+    price_code == Movie::REGULAR
+  end
+
+  def new_release?
+    price_code == Movie::NEW_RELEASE
+  end
+
+  def childrens?
+    price_code == Movie::CHILDRENS
+  end
 end
 
 class Rental
@@ -19,7 +31,7 @@ class Rental
   end
 
   def frequent_renter_points
-    if movie.price_code == Movie::NEW_RELEASE && days_rented > 1
+    if movie.new_release? && days_rented > 1
       2
     else
       1
@@ -28,13 +40,12 @@ class Rental
 
   def rental_amount
     this_amount = 0
-    case movie.price_code
-    when Movie::REGULAR
+    if movie.regular?
       this_amount += 2
       this_amount += (days_rented - 2) * 1.5 if days_rented > 2
-    when Movie::NEW_RELEASE
+    elsif movie.new_release?
       this_amount += days_rented * 3
-    when Movie::CHILDRENS
+    elsif movie.childrens?
       this_amount += 1.5
       this_amount += (days_rented - 3) * 1.5 if days_rented > 3
     end
