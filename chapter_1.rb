@@ -59,7 +59,7 @@ class Customer
 	
 	def statement
 		result = "Rental Record for #{@name}\n"
-		@rentals.each do |rental|
+		rentals.each do |rental|
 			# show figures for this rental
 			result += "\t" + rental.movie.title + "\t" + rental.amount.to_s + "\n"
 		end
