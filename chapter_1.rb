@@ -58,11 +58,8 @@ class Customer
 	end
 	
 	def statement
-		frequent_renter_points = 0
 		result = "Rental Record for #{@name}\n"
 		@rentals.each do |rental|
-			# add frequent renter points
-			frequent_renter_points += rental.frequent_renter_points
 			# show figures for this rental
 			result += "\t" + rental.movie.title + "\t" + rental.amount.to_s + "\n"
 		end
@@ -74,5 +71,9 @@ class Customer
 
 	def total_amount
 		rentals.sum(&:amount)
+	end
+
+	def frequent_renter_points
+		rentals.sum(&:frequent_renter_points)
 	end
 end
