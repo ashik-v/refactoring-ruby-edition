@@ -46,7 +46,7 @@ end
 
 
 class Customer
-	attr_reader :name
+	attr_reader :name, :rentals
 	
 	def initialize(name)
 		@name = name
@@ -58,19 +58,21 @@ class Customer
 	end
 	
 	def statement
-		total_amount, frequent_renter_points = 0, 0
+		frequent_renter_points = 0
 		result = "Rental Record for #{@name}\n"
 		@rentals.each do |rental|
 			# add frequent renter points
 			frequent_renter_points += rental.frequent_renter_points
 			# show figures for this rental
 			result += "\t" + rental.movie.title + "\t" + rental.amount.to_s + "\n"
-			# add rental amounts
-			total_amount += rental.amount
 		end
 		#add footer lines
 		result += "Amount owed is #{total_amount}\n"
 		result += "You earned #{frequent_renter_points} frequent renter points"
 		result
+	end
+
+	def total_amount
+		rentals.sum(&:amount)
 	end
 end
