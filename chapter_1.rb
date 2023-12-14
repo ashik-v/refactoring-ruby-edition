@@ -1,13 +1,41 @@
+class RegularRate
+	def amount(days_rented)
+		result = 0
+		result += 2
+		result += (days_rented - 2) * 1.5 if days_rented > 2
+		result
+	end
+end
+
+class NewReleaseRate
+	def amount(days_rented)
+		days_rented * 3
+	end
+end
+
+class ChildrensRate
+	def amount(days_rented)
+		result = 0
+		result += 1.5
+		result += (days_rented - 3) * 1.5 if days_rented > 3
+		result
+	end
+end
+
 class Movie
-	REGULAR = 0
-	NEW_RELEASE = 1
-	CHILDRENS = 2
+	REGULAR = RegularRate.new
+	NEW_RELEASE = NewReleaseRate.new
+	CHILDRENS = ChildrensRate.new
 	
 	attr_reader :title
 	attr_reader :price_code
 	
 	def initialize(title, price_code)
 		@title, @price_code = title, price_code
+	end
+
+	def rental_amount(days_rented)
+		price_code.amount(days_rented)
 	end
 end
 
@@ -19,19 +47,7 @@ class Rental
 	end
 
 	def amount
-		result = 0
-		case movie.price_code
-		when Movie::REGULAR
-			result += 2
-			result += (days_rented - 2) * 1.5 if days_rented > 2
-		when Movie::NEW_RELEASE
-			result += days_rented * 3
-		when Movie::CHILDRENS
-			result += 1.5
-			result += (days_rented - 3) * 1.5 if days_rented > 3
-		end
-
-		result
+		movie.rental_amount(days_rented)
 	end
 
 	def frequent_renter_points
