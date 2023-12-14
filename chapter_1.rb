@@ -1,9 +1,10 @@
 class RegularRate
 	def amount(days_rented)
-		result = 0
-		result += 2
-		result += (days_rented - 2) * 1.5 if days_rented > 2
-		result
+		if days_rented > 2
+			2 + (days_rented - 2) * 1.5
+		else
+			2
+		end
 	end
 end
 
@@ -15,10 +16,11 @@ end
 
 class ChildrensRate
 	def amount(days_rented)
-		result = 0
-		result += 1.5
-		result += (days_rented - 3) * 1.5 if days_rented > 3
-		result
+		if days_rented > 3
+			1.5 + (days_rented - 3) * 1.5
+		else
+			1.5
+		end
 	end
 end
 
@@ -51,7 +53,6 @@ class Rental
 	end
 
 	def frequent_renter_points
-		# add bonus for a two day new release rental
 		if movie.price_code == Movie::NEW_RELEASE && days_rented > 1
 			2
 		else
