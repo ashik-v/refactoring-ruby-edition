@@ -36,7 +36,7 @@ class Movie
 		@title, @price_code = title, price_code
 	end
 
-	def rental_amount(days_rented)
+	def rate(days_rented)
 		price_code.amount(days_rented)
 	end
 end
@@ -49,7 +49,7 @@ class Rental
 	end
 
 	def amount
-		movie.rental_amount(days_rented)
+		movie.rate(days_rented)
 	end
 
 	def frequent_renter_points
