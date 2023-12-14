@@ -104,15 +104,29 @@ class Statement
 	end
 
 	def generate
-		result = "Rental Record for #{name}\n"
-		rentals.each do |rental|
-			# show figures for this rental
-			result += "\t" + rental.movie.title + "\t" + rental.amount.to_s + "\n"
-		end
-		#add footer lines
-		result += "Amount owed is #{total_amount}\n"
-		result += "You earned #{frequent_renter_points} frequent renter points"
+		[
+			title,
+			body,
+			footer
+		].join("\n")
+	end
 
-		result
+	def title
+		"Rental Record for #{name}"
+	end
+
+	def body
+		rentals.map do |rental|
+			line_item_for(rental)
+		end.join("\n")
+	end
+
+	def line_item_for(rental)
+		"\t" + rental.movie.title + "\t" + rental.amount.to_s
+	end
+
+	def footer
+		"Amount owed is #{total_amount}\n" +
+			"You earned #{frequent_renter_points} frequent renter points"
 	end
 end
