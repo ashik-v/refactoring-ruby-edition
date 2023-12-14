@@ -1,3 +1,5 @@
+require 'forwardable'
+
 class RegularRate
 	def amount(days_rented)
 		if days_rented > 2
@@ -75,16 +77,7 @@ class Customer
 	end
 	
 	def statement
-		result = "Rental Record for #{@name}\n"
-		rentals.each do |rental|
-			# show figures for this rental
-			result += "\t" + rental.movie.title + "\t" + rental.amount.to_s + "\n"
-		end
-		#add footer lines
-		result += "Amount owed is #{total_amount}\n"
-		result += "You earned #{frequent_renter_points} frequent renter points"
-		
-		result
+		Statement.generate_for(self)
 	end
 
 	def total_amount
@@ -93,5 +86,33 @@ class Customer
 
 	def frequent_renter_points
 		rentals.sum(&:frequent_renter_points)
+	end
+end
+
+class Statement
+	extend Forwardable
+
+	def self.generate_for(customer)
+		new(customer).generate
+	end
+
+	attr_reader :customer
+	def_delegators :customer, :rentals, :name, :total_amount, :frequent_renter_points
+
+	def initialize(customer)
+		@customer = customer
+	end
+
+	def generate
+		result = "Rental Record for #{name}\n"
+		rentals.each do |rental|
+			# show figures for this rental
+			result += "\t" + rental.movie.title + "\t" + rental.amount.to_s + "\n"
+		end
+		#add footer lines
+		result += "Amount owed is #{total_amount}\n"
+		result += "You earned #{frequent_renter_points} frequent renter points"
+
+		result
 	end
 end
